@@ -1,6 +1,1 @@
 *.pyc
-*.db
-.*~
-static/files/*
-
-
