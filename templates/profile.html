@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="SemiColonWeb" />
+
+	<!-- Stylesheets
+	============================================= -->
+	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/dark.css')}}" type="text/css" />
+
+	<!-- Travel Demo Specific Stylesheet -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='demos/travel/travel.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='demos/travel/css/datepicker.css')}}" type="text/css" />
+	<!-- / -->
+
+	<!-- Radio Checkbox Plugin -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/components/radio-checkbox.css')}}" type="text/css" />
+
+	<!-- Bootstrap select Plugin -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/components/bs-select.css')}}" type="text/css" />
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/font-icons.css')}}" type="text/css')}}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}" type="text/css" />
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/colors.php?color=AC4147')}}" type="text/css" />
+
+
+	<!-- Document Title
+	============================================= -->
+	<title>Profile | TruckBooking</title>
+
+	<style type="text/css">
+	@media screen and (max-width: 770px) {
+        .sidemenu {
+            display: none !important;
+        }
+    }
+    </style>
+
+</head>
+
+
+<body class="stretched side-panel-left" onload="initialize()">
+
+	<div class="body-overlay"></div>
+
+	<div id="side-panel" class="dark">
+
+		<div id="side-panel-trigger-close" class="side-panel-trigger"><a href="#"><i class="icon-line-cross"></i></a></div>
+
+		<div class="side-panel-wrap">
+
+			<div class="widget clearfix">
+
+				<h4>Profile</h4>
+
+				<nav class="nav-tree nobottommargin">
+					<ul>
+						<li><a href="{{url_for('clienthome')}}">Profile <i class="icon-user pull-right"></i></a></li>
+						<li><a href="#">Messages <i class="icon-envelope2 pull-right"></i></a></li>
+						<li><a href="#">Billing <i class="icon-credit-cards pull-right"></i></a></li>
+						<li><a href="{{url_for('logout')}}">Logout <i class="icon-line2-logout pull-right"></i></a></li>
+						<li><a href="#">Services</a></li>
+						<li><a href="#">FAQs</a></li>
+						<li><a href="#"><i class="icon-map-marker"></i>Contact</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Document Wrapper
+	============================================= -->
+	<div id="wrapper" class="clearfix">
+
+		{% include 'navbar.html' %}
+		
+    <!-- main right col -->
+    {%  include 'flash.html' %}
+		<!-- Content
+		============================================= -->
+		<section id="content">
+
+			<div class="content-wrap">
+
+				<div class="container clearfix">
+
+					<div class="row clearfix">
+
+
+						<img src="{{ url_for('static', filename='images/icons/avatar.jpg')}}" class="alignleft img-circle img-thumbnail notopmargin nobottommargin" alt="Avatar" style="max-width: 84px;">
+
+							<div class="heading-block noborder">
+								<h3>Company name</h3>
+								<!-- <span>Your Profile Bio</span> -->
+							</div>
+
+
+						<div class="col-sm-3 clearfix sidemenu">
+
+							<div class="list-group">
+								<a href="{{url_for('clienthome')}}" class="list-group-item clearfix">Profile <i class="icon-user pull-right"></i></a>
+								<a href="#" class="list-group-item clearfix">Messages <i class="icon-envelope2 pull-right"></i></a>
+								<a href="#" class="list-group-item clearfix">Billing <i class="icon-credit-cards pull-right"></i></a>
+								<a href="{{url_for('logout')}}" class="list-group-item clearfix">Logout <i class="icon-line2-logout pull-right"></i></a>
+							</div>
+
+						</div>
+
+						<div class="col-sm-9">
+
+							
+							<div class="clear"></div>
+
+							<div class="row clearfix">
+
+								<div class="col-md-12">
+
+									<div class="tabs tabs-responsive clearfix" id="profile tab">
+
+										<ul class="tab-nav tab-nav2 clearfix">
+											<li><a href="#tab-newenquiry"><i class="icon-rss2"></i> New Enquiry</a></li>
+											<li><a href="#tab-enquiries"><i class="icon-rss2"></i> Enquiries</a></li>
+											<li><a href="#tab-currentbookings"><i class="icon-pencil2"></i> Current Bookings</a></li>
+											<li><a href="#tab-completedbookings"><i class="icon-reply"></i> Completed Bookings</a></li>
+										</ul>
+
+										<div class="tab-container">
+
+											<div class="tab-content clearfix" id="tab-newenquiry">
+												<div class="fancy-title title-dotted-border title-center">
+													<h2>Book your Truck</h2>
+												</div>
+												<form action="#" method="post" class="nobottommargin">
+													<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+													<input type="hidden" name="formtype" id="formtype" value="newenquiry">
+													<div class="row">
+														<div class="col-sm-6 col-xs-12 bottommargin-sm">
+															<label for="">From</label>
+															<input type="text" value="" class="sm-form-control" placeholder="Eg. Kochi" id="source" name="source"  required>
+														</div>
+														<div class="col-sm-6 col-xs-12 bottommargin-sm">
+															<label for="">To</label>
+															<input type="text" value="" class="sm-form-control" placeholder="Eg. Mangaluru" id="destination" name="destination" required>
+														</div>
+														<div class="clear"></div>
+														<div class="input-daterange travel-date-group col-sm-6 bottommargin-sm">
+															<div class="row">
+																<div class="col-sm-12 col-xs-12">
+																	<label for="">Date</label>
+																	<input type="text" value="" class="sm-form-control tleft" name="date" id="date" placeholder="MM/DD/YYYY" required>
+																</div>
+															</div>
+														</div>
+														<div class="col-sm-6 col-xs-12 bottommargin-sm">
+															<label for="">Material</label>
+															<input type="text" value="" class="sm-form-control" placeholder="Eg. Plywood" id="material" name="material" required>
+														</div>
+														<div class="col-sm-6 col-xs-12 bottommargin-sm">
+															<label>Weight</label>
+															<select class="selectpicker" title="Select weight range" name="weight" id="weight" required>
+																<option> < 9 tonnes</option>
+																<option> < 15 tonnes</option>
+																<option> < 20 tonnes</option>
+															</select>
+														</div>
+
+														<div class="col-sm-6 col-xs-12 bottommargin-sm">
+															<label>Truck types :</label>
+															<select class="selectpicker" name="trucktype" id="trucktype" title="Select the desired truck types...">
+																<option>Lorry</option>
+																<option>Truck</option>
+																<option>Tanker</option>
+															</select>
+														</div>
+
+														<div class="col-sm-12">
+															<button class="button button-3d nomargin rightmargin-sm" style="float:right">Submit Enquiry</button>
+														</div>
+													</div>
+												</form>
+											</div>
+											<div class="tab-content clearfix" id="tab-enquiries">
+												<div class="fancy-title title-dotted-border title-center">
+													<h2>Submitted Enquiries</h2>
+												</div>
+
+												<div class="table-responsive">
+													<table class="table table-bordered table-striped nobottommargin responsive-utilities">
+														<thead>
+															<tr>
+																<th>Enquiry Date</th>
+																<th>Shipment Date</th>
+																<th>Source</th>
+																<th>Destination</th>
+																<th>Edit</th>
+															</tr>
+														</thead>
+														<tbody>
+															{% for e in enquiries %}
+															<tr>
+																<td>
+																	<code>{{e.created_on.strftime('%d/%m/%Y')}}</code>
+																</td>
+																<td><code>{{e.date.strftime('%d/%m/%Y')}}</code></td>
+																<td>{{e.source + ", " + e.sourcestate}}</td>
+																<td>{{e.destination + ", " + e.destinationstate}}</td>
+																<td><a href="user/enquiry/{{ e.id }}"><button class="btn-primary">Edit/view</button></a></td>
+															</tr>
+															{% endfor %}														
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="tab-content clearfix" id="tab-currentbookings">	
+												<div class="fancy-title title-dotted-border title-center">
+													<h2>Current Bookings</h2>
+												</div>
+												<div class="table-responsive">
+													<table class="table table-bordered table-striped nobottommargin responsive-utilities">
+														<thead>
+															<tr>
+																<th>Enquiry Date</th>
+																<th>Shipment Date</th>
+																<th>Source</th>
+																<th>Destination</th>
+																<th>Edit</th>
+															</tr>
+														</thead>
+														<tbody>
+															{% for b in bookings %}
+															<tr>
+																<td>
+																<code>{{b.created_on.strftime('%d/%m/%Y')}}</code>
+																</td>
+																<td><code>{{b.date.strftime('%d/%m/%Y')}}</code></td>
+																<td>{{b.source + ", " + b.sourcestate}}</td>
+																<td>{{b.destination + ", " + b.destinationstate}}</td>
+																<td><button class="btn-primary" data-toggle="modal" data-target="#myModal">View</button></td>
+															</tr>
+															{% endfor %}
+														</tbody>
+													</table>
+												</div>
+											</div>
+
+											<div class="tab-content clearfix" id="tab-completedbookings">
+												<div class="fancy-title title-dotted-border title-center">
+													<h2>Completed Bookings</h2>
+												</div>
+
+												<div class="table-responsive">
+													<table class="table table-bordered table-striped nobottommargin responsive-utilities">
+														<thead>
+															<tr>
+																<th>Enquiry Date</th>
+																<th>Shipment Date</th>
+																<th>Source</th>
+																<th>Destination</th>
+																<th>Edit</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>
+																<code>5/23/2016</code>
+																</td>
+																<td><code>5/23/2016</code></td>
+																<td>Kochi</td>
+																<td>Mangalore</td>
+																<td><button class="btn-primary">View</button></td>
+
+															</tr>
+
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+		</section><!-- #content end -->
+
+		{% include 'footer.html' %}
+
+	</div><!-- #wrapper end -->
+
+
+	
+	<!-- Go To Top
+	============================================= -->
+	<div id="gotoTop" class="icon-angle-up"></div>
+
+	<!-- External JavaScripts
+	============================================= -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/plugins.js')}}"></script>
+
+	<!-- Travel Demo Specific Script -->
+	<script type="text/javascript" src="{{ url_for('static', filename='demos/travel/js/datepicker.js')}}"></script>
+	<!-- / -->
+
+	<!-- Bootstrap Select Plugin -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/components/bs-select.js')}}"></script>
+
+	<!-- Select Splitter Plugin -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/components/selectsplitter.js')}}"></script>
+	<!-- / -->
+
+	<!-- Autocomplete -->
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDjLjFPVX_H9OTvZdk-ssuti44s3A_Uj8E&libraries=places"></script>
+
+
+	<!-- / -->
+
+	<!-- Footer Scripts
+	============================================= -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/functions.js')}}"></script>
+
+	<script>
+	$(function() {
+			$('.travel-date-group').datepicker({
+				autoclose: true,
+				startDate: "today"
+			    
+			});
+		});
+
+	$(document).ready(function(){
+	$('.btn-update').on('click',function(){
+        var enquiryid = $(this).attr('enquiryid');
+        $('.editsource').val('Kochi');
+        // $('[name=enquiryid]').val(enquiryid);
+        // $('#userform').submit();
+       });
+	})
+	var source;
+	var destination;
+    function initialize() {
+      source = new google.maps.places.Autocomplete(
+          /** @type {HTMLInputElement} */(document.getElementById('source')),
+          { types: ['(cities)'], componentRestrictions: {country: "in"}, key: "AIzaSyDjLjFPVX_H9OTvZdk-ssuti44s3A_Uj8E" });
+      destination = new google.maps.places.Autocomplete(
+          /** @type {HTMLInputElement} */(document.getElementById('destination')),
+          { types: ['(cities)'], componentRestrictions: {country: "in"}, key: "AIzaSyDjLjFPVX_H9OTvZdk-ssuti44s3A_Uj8E" });
+      google.maps.event.addListener(source, 'place_changed', function() {
+      });
+      google.maps.event.addListener(destination, 'place_changed', function() {
+      });
+    }
+
+       
+    </script>
+</body>
+</html>

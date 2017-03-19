@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="SemiColonWeb" />
+
+	<!-- Stylesheets
+	============================================= -->
+	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/dark.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/font-icons.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}" type="text/css" />
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+
+	<!-- Document Title
+	============================================= -->
+	<title>Login | Canvas</title>
+
+</head>
+
+<body class="stretched" onload="initialize()">
+
+	{% include 'navbar.html' %}
+    <!-- main right col -->
+    {%  include 'flash.html' %}
+
+		<!-- Page Title
+		============================================= -->
+		
+
+		<!-- Content
+		============================================= -->
+		<section id="content">
+
+			<div class="content-wrap">
+
+				<div class="container clearfix">
+
+					<div class="col_one_third nobottommargin">
+
+						<div class="well well-lg nobottommargin">
+							<form id="login-form" name="login-form" class="nobottommargin" action="#" method="post">
+								<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+								<input type="hidden" name="formtype" id="formtype" value="login">
+
+								<h3>Login to your Account</h3>
+
+								<div class="col_full">
+									<label for="login-form-username">Email ID:</label>
+									<input type="text" id="email" name="email" value="" class="form-control" />
+								</div>
+
+								<div class="col_full">
+									<label for="login-form-password">Password:</label>
+									<input type="password" id="password" name="password" value="" class="form-control" />
+								</div>
+
+								<div class="col_full nobottommargin">
+									<button class="button button-3d nomargin" id="login-form-submit" name="login-form-submit" value="login">Login</button>
+									<a href="#" class="fright">Forgot Password?</a>
+								</div>
+
+							</form>
+						</div>
+
+					</div>
+
+					<div class="col_two_third col_last nobottommargin">
+
+
+						<h3>Don't have an Account? Register Now.</h3>
+
+						<p>Somethings here.</p>
+
+						<form id="register-form" name="register-form" class="nobottommargin" action="#" method="post">
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+							<input type="hidden" name="formtype" id="formtype" value="register">
+
+
+							<div class="col_half">
+								<label for="name">Name:</label>
+								<input type="text" id="name" name="name" value="" class="form-control" {{('value="%s"' %oldform['name'])|safe if retry}} required />
+							</div>
+
+							<div class="col_half col_last">
+								<label for="email">Email Address:</label>
+								<input type="email" id="email" name="email" value="" class="form-control" {{('value="%s"' %oldform['email'])|safe if retry}} required />
+							</div>
+
+							<div class="clear"></div>
+
+							<div class="col_half">
+								<label for="mobilenumber">Mobile :*</label>
+								<input type="text" id="mobilenumber" name="mobilenumber" value="" class="form-control" {{('value="%s"' %oldform['mobilenumber'])|safe if retry}} required />
+							</div>
+
+							<div class="col_half col_last">
+								<label for="mobile">Phone :</label>
+								<input type="text" id="phonenumber" name="phonenumber" value="" class="form-control" {{('value="%s"' %oldform['phone'])|safe if retry}}/>
+							</div>
+
+							<div class="clear"></div>
+
+							<div class="col_half">
+								<label for="address">Address :*</label>
+								<input type="textbox" id="address" name="address" value="" class="form-control" {{('value="%s"' %oldform['address'])|safe if retry}} required />
+							</div>
+
+							<div class="col_half col_last">
+								<label for="city">City :</label>
+								<input type="text" id="city" name="city" value="" class="form-control" {{('value="%s"' %oldform['city'])|safe if retry}} required />
+							</div>
+
+							<div class="clear"></div>
+
+							<div class="col_half">
+								<label for="register-form-password">Choose Password:</label>
+								<input type="password" id="password" name="password" value="" class="form-control" />
+							</div>
+
+							<div class="col_half col_last">
+								<label for="passwordconfirm">Re-enter Password:</label>
+								<input type="password" id="passwordconfirm" name="passwordconfirm" value="" class="form-control" />
+							</div>
+
+							<div class="clear"></div>
+
+							<div class="col_full nobottommargin">
+								<button class="button button-3d button-black nomargin" type="submit">Register Now</button>
+							</div>
+
+						</form>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</section><!-- #content end -->
+
+		{% include 'footer.html' %}
+
+	</div><!-- #wrapper end -->
+
+	<!-- Go To Top
+	============================================= -->
+	<div id="gotoTop" class="icon-angle-up"></div>
+
+	<!-- External JavaScripts
+	============================================= -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/plugins.js')}}"></script>
+
+	<!-- Autocomplete -->
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDjLjFPVX_H9OTvZdk-ssuti44s3A_Uj8E&libraries=places"></script>
+
+	<!-- Footer Scripts
+	============================================= -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/functions.js')}}"></script>
+
+	<script type="text/javascript">
+		var city;
+        function initialize() {
+          city = new google.maps.places.Autocomplete(
+              /** @type {HTMLInputElement} */(document.getElementById('city')),
+              { types: ['(cities)'], componentRestrictions: {country: "in"} });
+          google.maps.event.addListener(city, 'place_changed', function() {
+          });
+        }
+
+
+  function checkPasswordMatch() {
+    var password = $("#password").val();
+    var confirmPassword = $("#passwordconfirm").val();
+
+    if (password != confirmPassword)
+        $("#divCheckPasswordMatch").html("Passwords do not match!");
+    else
+        $("#divCheckPasswordMatch").html("Passwords match.");
+  }
+
+$(document).ready(function () {
+   $("#passwordconfirm").keyup(checkPasswordMatch);
+});
+  
+    </script>
+</body>
+</html>

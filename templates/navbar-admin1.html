@@ -1,0 +1,46 @@
+<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!--<a class="navbar-brand" href="{{url_for('index')}}"></a>-->
+          <a class="navbar-brand" href="{{url_for('index')}}"><img style="max-height:50px; margin-top: -7px;" src="{{ url_for('static',filename='images/logo.png') }}"></a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+        {% if g.user.is_authenticated() %}
+        <ul class="nav navbar-nav">
+        
+        
+          {% if g.user.is_admin %}
+          <li class="{{'active' if page=='admin'}}"><a href="{{url_for('admin_users')}}"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>Admin</a></li>
+          {% endif %}
+          
+        </ul>
+        {% endif %}
+        
+        <ul class="nav navbar-nav navbar-right">
+            {% if g.user.is_authenticated() %}
+          	<span class="glyphicon glyphicon-user" aria-hidden="true"></span>{{g.user.name}} (Me)
+          	<span class="caret"> </span></a>
+          	<ul class="dropdown-menu" role="menu">
+            <li><a href="#">Edit User Details</a></li>
+ 			<li><a href="{{url_for('logout')}}">Logout</span> </a>          
+          </ul>
+        </li>
+              
+              
+              </a></li>
+              {% else %}
+              <li class="{% if page == 'login' %}{{'active'}}{% endif %}"><a href="{{url_for('login')}}">Login</a></li>
+              <li class = "{% if page == 'register' %}{{'active'}}{% endif %}"><a href="{{url_for('login')}}">Register</a></li>
+              {% endif %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>

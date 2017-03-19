@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="SemiColonWeb" />
+
+	<!-- Stylesheets
+	============================================= -->
+	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/dark.css')}}" type="text/css" />
+
+	<!-- Travel Demo Specific Stylesheet -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='demos/travel/travel.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='demos/travel/css/datepicker.css')}}" type="text/css" />
+	<!-- / -->
+
+	<!-- Radio Checkbox Plugin -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/components/radio-checkbox.css')}}" type="text/css" />
+
+	<!-- Bootstrap select Plugin -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/components/bs-select.css')}}" type="text/css" />
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/font-icons.css')}}" type="text/css')}}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css')}}" type="text/css" />
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css')}}" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/colors.php?color=AC4147')}}" type="text/css" />
+
+
+	<!-- Document Title
+	============================================= -->
+	<title>Profile | TruckBooking</title>
+
+</head>
+
+
+<body class="stretched" onload="initialize()">
+
+	<!-- Document Wrapper
+	============================================= -->
+	<div id="wrapper" class="clearfix">
+
+		{% include 'navbar.html' %}
+    <!-- main right col -->
+    {%  include 'flash.html' %}
+		<!-- Content
+		============================================= -->
+		<section id="content">
+
+			<div class="content-wrap">
+
+				<div class="container clearfix">
+
+					<div class="row clearfix">
+
+						<div class="col-sm-9">
+
+							<img src="{{ url_for('static', filename='images/icons/avatar.jpg')}}" class="alignleft img-circle img-thumbnail notopmargin nobottommargin" alt="Avatar" style="max-width: 84px;">
+
+							<div class="heading-block noborder">
+								<h3>Company name</h3>
+								<!-- <span>Your Profile Bio</span> -->
+							</div>
+
+							<div class="clear"></div>
+
+							<div class="row clearfix">
+
+								<div class="col-md-12">
+
+									<div class="fancy-title title-dotted-border title-center">
+									<h2>Update Enquiry</h2>
+									</div>
+									<form action="#" method="post" class="nobottommargin">
+										<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+										<input type="hidden" name="formtype" id="formtype" value="newenquiry">
+										<div class="row">
+											<div class="col-sm-6 col-xs-12 bottommargin-sm">
+												<label for="">From</label>
+												<input type="text" value="{{ enquiry.source + ', ' + enquiry.sourcestate }}" class="sm-form-control" placeholder="Eg. Kochi" id="source" name="source"  required>
+											</div>
+											<div class="col-sm-6 col-xs-12 bottommargin-sm">
+												<label for="">To</label>
+												<input type="text" value="{{ enquiry.destination + ', ' + enquiry.destinationstate }}" class="sm-form-control" placeholder="Eg. Mangaluru" id="destination" name="destination" required>
+											</div>
+											<div class="clear"></div>
+											<div class="input-daterange travel-date-group col-sm-6 bottommargin-sm">
+												<div class="row">
+													<div class="col-sm-12 col-xs-12">
+														<label for="">Date</label>
+														<input type="text" value="{{enquiry.date.strftime('%d/%m/%Y')}}" class="sm-form-control tleft" name="date" id="date" placeholder="MM/DD/YYYY" required>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-6 col-xs-12 bottommargin-sm">
+												<label for="">Material</label>
+												<input type="text" value="{{ enquiry.material }}" class="sm-form-control" placeholder="Eg. Plywood" id="material" name="material" required>
+											</div>
+											<div class="col-sm-6 col-xs-12 bottommargin-sm">
+												<label>Weight</label>
+												<select class="selectpicker" title="Select weight range" name="weight" id="weight" required>
+													<option {{ 'selected' if enquiry.weight=='< 9 tonnes' }}> < 9 tonnes</option>
+													<option {{ 'selected' if enquiry.weight=='< 15 tonnes' }}> < 15 tonnes</option>
+													<option {{ 'selected' if enquiry.weight=='< 20 tonnes' }}> < 20 tonnes</option>
+												</select>
+											</div>
+
+											<div class="col-sm-6 col-xs-12 bottommargin-sm">
+												<label>Truck types :</label>
+												<select class="selectpicker" name="trucktype" id="trucktype" title="Select the desired truck types...">
+												<option {{ 'selected' if enquiry.trucktype=='Lorry' }}>Lorry</option>
+												<option {{ 'selected' if enquiry.trucktype=='Truck' }}>Truck</option>
+												<option {{ 'selected' if enquiry.trucktype=='Tanker' }}>Tanker</option>
+												</select>
+											</div>
+											
+											<div class="col-sm-12">
+												<button class="button button-3d nomargin rightmargin-sm" style="float:right">Update Enquiry</button>
+											</div>
+										</div>
+									</form>
+												
+								</div>
+							</div>
+						</div>
+
+						<div class="line visible-xs-block"></div>
+
+						<div class="col-sm-3 clearfix">
+							<div class="list-group">
+								<a href="{{url_for('clienthome')}}" class="list-group-item clearfix">Profile <i class="icon-user pull-right"></i></a>
+								<a href="#" class="list-group-item clearfix">Messages <i class="icon-envelope2 pull-right"></i></a>
+								<a href="#" class="list-group-item clearfix">Billing <i class="icon-credit-cards pull-right"></i></a>
+								<a href="{{url_for('logout')}}" class="list-group-item clearfix">Logout <i class="icon-line2-logout pull-right"></i></a>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+
+
+			
+		</section><!-- #content end -->
+
+		{% include 'footer.html' %}
+
+	</div><!-- #wrapper end -->
+
+
+	
+	<!-- Go To Top
+	============================================= -->
+	<div id="gotoTop" class="icon-angle-up"></div>
+
+	<!-- External JavaScripts
+	============================================= -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js')}}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/plugins.js')}}"></script>
+
+	<!-- Travel Demo Specific Script -->
+	<script type="text/javascript" src="{{ url_for('static', filename='demos/travel/js/datepicker.js')}}"></script>
+	<!-- / -->
+
+	<!-- Bootstrap Select Plugin -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/components/bs-select.js')}}"></script>
+
+	<!-- Select Splitter Plugin -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/components/selectsplitter.js')}}"></script>
+	<!-- / -->
+
+	<!-- Autocomplete -->
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDjLjFPVX_H9OTvZdk-ssuti44s3A_Uj8E&libraries=places"></script>
+
+
+	<!-- / -->
+
+	<!-- Footer Scripts
+	============================================= -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/functions.js')}}"></script>
+
+	<script>
+	$(function() {
+			$('.travel-date-group').datepicker({
+				autoclose: true,
+				startDate: "today"
+			    
+			});
+		});
+
+	$(document).ready(function(){
+	$('.btn-update').on('click',function(){
+        var enquiryid = $(this).attr('enquiryid');
+        $('.editsource').val('Kochi');
+        // $('[name=enquiryid]').val(enquiryid);
+        // $('#userform').submit();
+       });
+	})
+	var source;
+	var destination;
+    function initialize() {
+      source = new google.maps.places.Autocomplete(
+          /** @type {HTMLInputElement} */(document.getElementById('source')),
+          { types: ['(cities)'], componentRestrictions: {country: "in"}, key: "AIzaSyDjLjFPVX_H9OTvZdk-ssuti44s3A_Uj8E" });
+      destination = new google.maps.places.Autocomplete(
+          /** @type {HTMLInputElement} */(document.getElementById('destination')),
+          { types: ['(cities)'], componentRestrictions: {country: "in"}, key: "AIzaSyDjLjFPVX_H9OTvZdk-ssuti44s3A_Uj8E" });
+      google.maps.event.addListener(source, 'place_changed', function() {
+      });
+      google.maps.event.addListener(destination, 'place_changed', function() {
+      });
+    }
+
+       
+    </script>
+</body>
+</html>

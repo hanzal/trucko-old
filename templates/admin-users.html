@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Users-Admin | TruckBooking</title>
+
+  <!-- Bootstrap core CSS -->
+  <!-- <link href="{{ url_for('static', filename='css/bootstrap.css')}}" rel="stylesheet"> -->
+  <link href="{{ url_for('static', filename='css/bootswatch.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/stylesadmin.css') }}" rel="stylesheet">
+
+  <!-- favicon -->
+  <!--<link rel="icon" type="image/png" href="{{ url_for('static',filename='images/favicon.png') }}"/> -->
+</head>
+
+<body style="padding-top: 70px;">
+  
+  {% include 'navbar-admin.html' %}
+  <div id="modal-bg" class="modal-bg">
+
+  <div class="container">
+      <div class="row">
+        <div class="col-md-12" >
+        <h3></h3>
+          <div class="panel">
+            <div class="panel-body">
+              <ul class="nav nav-pills nav-justified">
+                <li class="active"><a data-toggle="pill" href="#verify">Verify Users</a></li>
+                <li><a data-toggle="pill" href="#verified">Verified Users</a></li>
+              </ul>
+              <div class="tab-content">
+                <div id="verify" class="tab-pane fade in active">
+                 <h3>Verify Accounts:</h3>
+                 <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <th>Address</th>
+                      <th>City</th>
+                      <th>State</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for user in unverifiedusers %}
+                  <tr ">
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.mobilenumber}}</td>
+                    <td>{{user.address}}</td>
+                    <td>{{user.city}}</td>
+                    <td>{{user.state}}</td>
+                    <td>
+                     <button type="submit" class="btn btn-success btn-sm" id="btn-approve" userid="{{user.id}}">Approve</button> <button type="submit" id="btn-reject" class="btn btn-warning btn-sm" userid="{{user.id}}">Reject</button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+                </table>
+                </div>
+                <div id="verified" class="tab-pane fade">
+                 <h3>Verified Accounts:</h3>
+                 <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <th>Address</th>
+                      <th>City</th>
+                      <th>State</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for user in verifiedusers %}
+                  <tr">
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.mobilenumber}}</td>
+                    <td>{{user.address}}</td>
+                    <td>{{user.city}}</td>
+                    <td>{{user.state}}</td>
+                    <td>
+                     <button type="submit" class="btn btn-success btn-sm" id="btn-edit" userid="{{user.id}}">Edit</button> <button type="submit" id="btn-reject" class="btn btn-warning btn-sm" userid="{{user.id}}">Delete</button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+                </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>        
+    </div>
+  </div>
+
+  <form id="userform" method="post" class="form-inline" tyle="display: inline-block">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="formtype" value="">
+            <input type="hidden" id="userid" class="form-control" name="userid" value="" >
+    </form>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ url_for('static', filename='js/jquery.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+       $('#btn-approve').on('click',function(){
+        var userid = $(this).attr('userid');
+        $('[name=formtype]').val('approve');
+        $('[name=userid]').val(userid);
+        $('#userform').submit();
+       });
+       $('#btn-reject').on('click',function(){
+        var userid = $(this).attr('userid');
+        $('[name=formtype]').val('reject');
+        $('[name=userid]').val(userid);
+        $('#userform').submit();
+       });
+       $('#btn-edit').on('click',function(){
+        var userid = $(this).attr('userid');
+        $('[name=formtype]').val('edit');
+        $('[name=userid]').val(userid);
+        $('#userform').submit();
+       });
+     })
+    </script>
+  </body>
+
+  </html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title> Enquiries - Admin | TruckBooking</title>
+
+  <!-- Bootstrap core CSS -->
+  <!-- <link href="{{ url_for('static', filename='css/bootstrap.css')}}" rel="stylesheet"> -->
+  <link href="{{ url_for('static', filename='css/bootswatch.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/stylesadmin.css') }}" rel="stylesheet">
+
+  <!-- favicon -->
+  <!--<link rel="icon" type="image/png" href="{{ url_for('static',filename='images/favicon.png') }}"/> -->
+</head>
+
+<body style="padding-top: 70px;">
+  
+  {% include 'navbar-admin.html' %}
+  <div id="modal-bg" class="modal-bg">
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-12" >
+        <h3></h3>
+          <div class="panel">
+            <div class="panel-body">
+              <ul class="nav nav-tabs nav-justified">
+                <li class="active"><a data-toggle="pill" href="#new_enquiries">NEW ENQUIRIES</a></li>
+                <li><a data-toggle="pill" href="#enquiries_processing">ENQUIRIES PROCESSING</a></li>
+              </ul>
+              <div class="tab-content">
+                <div id="new_enquiries" class="tab-pane fade in active">
+                  <h3>New Enquiries :</h3>
+                  <hr/>
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Name of Company</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Date</th>
+                        <th>Weight</th>
+                        <th>Mark Processed</th>
+                        <th>View</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for enq in newenquiries %}
+                      <tr">
+                        <td>{{enq.user.name}}</td>
+                        <td>{{enq.source + ", " + enq.sourcestate}}</td>
+                        <td>{{enq.destination + ", " + enq.destinationstate}}</td>
+                        <td>{{enq.date.strftime('%d/%m/%Y')}}</td>
+                        <td>{{enq.weight}}</td>
+                        <td>
+                        <button type="submit" class="btn btn-success btn-sm" id="btn-processed" enquiryid="{{enq.id}}">Processed</button></td>
+                        <td><a href="/admin/enquiries/{{ enq.id }}"><button class="btn btn-primary btn-sm" id="btn-view" >View</button></a> 
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <div id="enquiries_processing" class="tab-pane fade">
+                  <h3>Enquiries Processing :</h3>
+                  <hr/>
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Name of Company</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Date</th>
+                        <th>Weight</th>
+                        <th>Lowest Quote</th>
+                        <th>View</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for pe in processedenquiries %}
+                      <tr>
+                        <td>{{pe.user.name}}</td>
+                        <td>{{pe.source + ", " + pe.sourcestate}}</td>
+                        <td>{{pe.destination + ", " + pe.destinationstate}}</td>
+                        <td>{{pe.date.strftime('%d/%m/%Y')}}</td>
+                        <td>{{pe.weight}}</td>
+                        <td>{{pe.lowestquote}}</td>
+                        <td>
+                        <a href="/admin/enquiries/{{ pe.id }}""><button class="btn btn-success btn-sm" id="btn-view">View</button></a> 
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div> 
+            
+
+  <form id="userform" method="post" class="form-inline" tyle="display: inline-block">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="formtype" value="">
+            <input type="hidden" id="enquiry" class="form-control" name="enquiryid" value="" >
+    </form>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ url_for('static', filename='js/jquery.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        
+
+       $('#btn-processed').on('click',function(){
+        var enquiryid = $(this).attr('enquiryid');
+        $('[name=formtype]').val('processed');
+        $('[name=enquiryid]').val(enquiryid);
+        $('#userform').submit();
+       });
+     })
+    </script>
+  </body>
+
+  </html>

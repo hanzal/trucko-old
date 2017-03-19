@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Enquiry - Admin | TruckBooking</title>
+
+  <!-- Bootstrap core CSS -->
+  <!-- <link href="{{ url_for('static', filename='css/bootstrap.css')}}" rel="stylesheet"> -->
+  <link href="{{ url_for('static', filename='css/bootswatch.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/stylesadmin.css') }}" rel="stylesheet">
+
+  <!-- favicon -->
+  <!--<link rel="icon" type="image/png" href="{{ url_for('static',filename='images/favicon.png') }}"/> -->
+</head>
+
+<body style="padding-top: 70px;">
+  
+  {% include 'navbar-admin.html' %}
+  <div id="modal-bg" class="modal-bg">
+
+  <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <h3>Enquiry No. {{enquiry.id}}:</h3>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <a href="#">
+                <span style="font-size:24px;" class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span style="font-size:24px;">{{enquiry.user.name}}</span>
+              </a> 
+              <div class="pull-right">
+                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                {{enquiry.updated_on.strftime('%Y-%m-%d %H:%M:%S %Z ')}}
+              </div>
+              <hr/>
+
+              <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-md-4" style="text-align: center;">Source</th>
+                      <th class="col-md-4" style="text-align: center;"></th>
+                      <th class="col-md-4" style="text-align: center;">Destination</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr ">
+                    <td style="text-align: center;"><h4>{{enquiry.source + ", " + enquiry.sourcestate}}</h4></td>
+                    <td style="text-align: center;"><h4><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></h4></td>
+                    <td style="text-align: center;"><h4>{{enquiry.destination + ", " + enquiry.destinationstate}}</h4></td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              <hr/>
+              <h5 style="text-align: center;">Date: {{enquiry.date.strftime('%B %d, %Y')}}</h5>
+              <hr/>
+              <div class="col-md-4">
+                <div class="panel panel-success">
+                  <div class="panel-heading" style="text-align: center; color:white">Weight</div>
+                  <div class="panel-body" style="text-align: center;"">
+                    {{enquiry.weight}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-info">
+                  <div class="panel-heading" style="text-align: center; color:white">Truck Type</div>
+                  <div class="panel-body" style="text-align: center;">
+                    {{enquiry.trucktype}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-warning">
+                  <div class="panel-heading" style="text-align: center;  color:white" >Material</div>
+                  <div class="panel-body" style="text-align: center;">
+                    {{enquiry.material}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10 col-md-offset-1" >
+        <h3></h3>
+          <div class="panel">
+            <div class="panel-body">
+             <h3>Quoted Rates:</h3>
+             <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Agent</th>
+                  <th>Place</th>
+                  <th>Amount</th>
+                  <th>Submitted Time</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% if quotes %}
+              {% for q in quotes %}
+              <tr ">
+                <td>{{q.agent.name}}</td>
+                <td>{{q.agent.city + ", " + q.agent.state}}</td>
+                <td>{{q.quoteamount}}</td>
+                <td>{{q.updated_on.strftime('%Y-%m-%d %H:%M:%S %Z ')}}</td>
+                <td>
+                 <button type="submit" class="btn btn-confirm btn-{{ 'success' if q.accepted else 'primary' }}  btn-sm" id="btn-confirm" quoteid="{{q.id}}" {{ 'disabled' if enquiry.confirmed }}>{{ 'Confirmed' if q.accepted else ('Rejected' if enquiry.confirmed else 'Confirm') }}</button>
+                </td>
+              </tr>
+              {% endfor %}
+              {% endif %}
+             </tbody>
+             </table>
+            </div>
+          </div>
+        </div>
+      </div>        
+    </div>
+  </div>
+
+  <form id="userform" method="post" class="form-inline" tyle="display: inline-block">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="formtype" id="formtype" value="">
+            <input type="hidden" id="enquiryid" name="enquiryid" value="" >
+            <input type="hidden" id="quoteid" name="quoteid" value="" >
+    </form>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ url_for('static', filename='js/jquery.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+       $('.btn-confirm').on('click',function(){
+        var quoteid = $(this).attr('quoteid');
+        $('[name=formtype]').val('confirm');
+        $('[name=enquiryid]').val('{{enquiry.id}}');
+        $('[name=quoteid]').val(quoteid);
+        $('#userform').submit();
+       });
+     })
+    </script>
+  </body>
+
+  </html>
