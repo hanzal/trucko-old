@@ -8,6 +8,7 @@ import requests as req
 import pytz
 app = Flask(__name__)
 
+
 app.config.from_object('config')
 
 from models import User, Agent, Booking, AssignedVehicle, Enquiry, Quote
